@@ -181,7 +181,15 @@ const CopsCards = () => {
                 ></Card.Text>
               </Card.Body>
               <Card.Footer>
-                <small className="text-muted">{cop.status}</small>
+            
+                <h4
+                  style={{
+                    color: cop.status === "Criminal Found" ? "green" : "red",
+                  }}
+                >
+                    Status: 
+                  {cop.status}
+                </h4>
               </Card.Footer>
             </Card>
           );

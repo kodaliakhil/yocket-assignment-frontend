@@ -6,9 +6,10 @@ import CopsCards from "./components/CopsCards";
 function App() {
   return (
     <>
-      <Header />
+      {/* <Header /> */}
       <div style={{ padding: "30px" }}>
         <CopsCards />
+        <h4>For Testing purpose showing criminal info below</h4>
         <CriminalCard />
       </div>
     </>

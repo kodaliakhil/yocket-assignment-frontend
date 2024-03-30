@@ -27,6 +27,7 @@ const initialCopsData = [
 let allCitynames;
 let allVehicles;
 const CopsCards = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const [copsData, setCopsData] = useState(initialCopsData);
   const [citiesData, setCitiesData] = useState([]);
   const [citynames, setCitynames] = useState([]);
@@ -120,84 +121,93 @@ const CopsCards = () => {
     // assignRandomHideout();
     getCityData();
     getVehicleData();
+    setIsLoading(false);
   }, []);
   return (
     <div>
-      <CardGroup>
-        {copsData?.map((cop) => {
-          return (
-            <Card key={cop.title}>
-              <Card.Img variant="top" src={`/${cop.title}.png`} />
-              <Card.Body>
-                <Card.Title>{cop.title}</Card.Title>
-                <Card.Text
-                  className="d-flex align-items-center "
-                  style={{ gap: 20 }}
-                >
-                  <span>City:</span>
-                  {/*//////////////////////////////////////        SELECT CITY        /////////////////////////////////////////*/}
-                  {cop.city != "" ? (
-                    cop.city
-                  ) : (
-                    <Form.Select
-                      onChange={(e) => onChangeCitySelect(e, cop.title)}
+      {isLoading ? (
+        <div className="d-flex justify-content-center align-items-center">
+          <h1>Loading... Due to free tier it may take some time when visiting the page for first time</h1>
+        </div>
+      ) : (
+        <>
+          <CardGroup>
+            {copsData?.map((cop) => {
+              return (
+                <Card key={cop.title}>
+                  <Card.Img variant="top" src={`/${cop.title}.png`} />
+                  <Card.Body>
+                    <Card.Title>{cop.title}</Card.Title>
+                    <Card.Text
+                      className="d-flex align-items-center "
+                      style={{ gap: 20 }}
                     >
-                      <option>Select City</option>
-                      {citynames.map((city) => (
-                        <option key={city} value={city}>
-                          {city}
-                        </option>
-                      ))}
-                    </Form.Select>
-                  )}
+                      <span>City:</span>
+                      {/*//////////////////////////////////////        SELECT CITY        /////////////////////////////////////////*/}
+                      {cop.city != "" ? (
+                        cop.city
+                      ) : (
+                        <Form.Select
+                          onChange={(e) => onChangeCitySelect(e, cop.title)}
+                        >
+                          <option>Select City</option>
+                          {citynames.map((city) => (
+                            <option key={city} value={city}>
+                              {city}
+                            </option>
+                          ))}
+                        </Form.Select>
+                      )}
 
-                  {/*//////////////////////////////////////        SELECT CITY        /////////////////////////////////////////*/}
-                </Card.Text>
-                <Card.Text
-                  className="d-flex align-items-center "
-                  style={{ gap: 20 }}
-                >
-                  <span>Vehicle:</span>
-                  {/*//////////////////////////////////////        SELECT VEHICLE        /////////////////////////////////////////*/}
-                  {cop.vehicle != "" ? (
-                    cop.vehicle
-                  ) : (
-                    <Form.Select
-                      onChange={(e) => onChangeVehicleSelect(e, cop.title)}
+                      {/*//////////////////////////////////////        SELECT CITY        /////////////////////////////////////////*/}
+                    </Card.Text>
+                    <Card.Text
+                      className="d-flex align-items-center "
+                      style={{ gap: 20 }}
                     >
-                      <option>Select Vehicle</option>
-                      {vehiclesData.map((vehicle) => (
-                        <option key={vehicle.kind} value={vehicle.kind}>
-                          {vehicle.kind}
-                        </option>
-                      ))}
-                    </Form.Select>
-                  )}
-                  {/*//////////////////////////////////////        SELECT VEHICLE        /////////////////////////////////////////*/}
-                </Card.Text>
-                <Card.Text
-                  className="d-flex align-items-center "
-                  style={{ gap: 20 }}
-                ></Card.Text>
-              </Card.Body>
-              <Card.Footer>
-            
-                <h4
-                  style={{
-                    color: cop.status === "Criminal Found" ? "green" : "red",
-                  }}
-                >
-                    Status: 
-                  {cop.status}
-                </h4>
-              </Card.Footer>
-            </Card>
-          );
-        })}
-      </CardGroup>
-      <div className="d-flex justify-content-end">
-        <Button onClick={startSearch}>Start Search</Button>
-      </div>
+                      <span>Vehicle:</span>
+                      {/*//////////////////////////////////////        SELECT VEHICLE        /////////////////////////////////////////*/}
+                      {cop.vehicle != "" ? (
+                        cop.vehicle
+                      ) : (
+                        <Form.Select
+                          onChange={(e) => onChangeVehicleSelect(e, cop.title)}
+                        >
+                          <option>Select Vehicle</option>
+                          {vehiclesData.map((vehicle) => (
+                            <option key={vehicle.kind} value={vehicle.kind}>
+                              {vehicle.kind}
+                            </option>
+                          ))}
+                        </Form.Select>
+                      )}
+                      {/*//////////////////////////////////////        SELECT VEHICLE        /////////////////////////////////////////*/}
+                    </Card.Text>
+                    <Card.Text
+                      className="d-flex align-items-center "
+                      style={{ gap: 20 }}
+                    ></Card.Text>
+                  </Card.Body>
+                  <Card.Footer>
+                    <h4
+                      style={{
+                        color:
+                          cop.status === "Criminal Found" ? "green" : "red",
+                      }}
+                    >
+                      Status:
+                      {cop.status}
+                    </h4>
+                  </Card.Footer>
+                </Card>
+              );
+            })}
+          </CardGroup>
+          <div className="d-flex justify-content-end">
+            <Button onClick={startSearch}>Start Search</Button>
+          </div>
+        </>
+      )}
     </div>
   );
 };

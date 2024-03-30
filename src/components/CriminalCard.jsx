@@ -5,7 +5,7 @@ const CriminalCard = () => {
   const [hideoutData, setHideoutData] = useState();
   useEffect(() => {
     async function getHideoutData() {
-      const response = await fetch("http://localhost:5000/assignRandomHideout");
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/assignRandomHideout`);
       const hideout = await response.json();
       setHideoutData(hideout.criminalHideoutPlace);
     }

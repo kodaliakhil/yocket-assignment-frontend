@@ -40,11 +40,14 @@ const CopsCards = () => {
       status: "Yet To Catch",
     }));
 
-    const response = await fetch("http://localhost:5000/catchCriminal", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(reqData),
-    });
+    const response = await fetch(
+      `${import.meta.env.VITE_BACKEND_URL}/catchCriminal`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(reqData),
+      }
+    );
     const resCopsData = await response.json();
     console.log(resCopsData.reqData);
     const resData = resCopsData.reqData.map((i) => ({
@@ -98,14 +101,18 @@ const CopsCards = () => {
     //   console.log(hideout);
     // }
     async function getCityData() {
-      const response = await fetch("http://localhost:5000/getCityData");
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}/getCityData`
+      );
       const cities = await response.json();
       setCitiesData(cities.cityData);
       allCitynames = cities.cityData.map((i) => i.name);
       setCitynames(allCitynames);
     }
     async function getVehicleData() {
-      const response = await fetch("http://localhost:5000/getVehicles");
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}/getVehicles`
+      );
       const vehicles = (await response.json()).vehicles;
       setVehiclesData(vehicles);
       allVehicles = vehicles;
